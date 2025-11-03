@@ -639,7 +639,7 @@ void cmdModify(const vector<string>& params) {
     }
 
     string selectedISBN = loginStack.back().selectedISBN;
-    Book& book = books[selectedISBN];
+    Book book = books[selectedISBN];  // Make a copy instead of reference
 
     set<string> usedParams;
     string newISBN = "";
@@ -735,6 +735,9 @@ void cmdModify(const vector<string>& params) {
         strcpy(book.ISBN, newISBN.c_str());
         books[newISBN] = book;
         loginStack.back().selectedISBN = newISBN;
+    } else {
+        // Update the book in place if ISBN wasn't changed
+        books[selectedISBN] = book;
     }
 
     saveBooks();
