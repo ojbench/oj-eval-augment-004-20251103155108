@@ -127,7 +127,8 @@ bool isValidBookName(const string& s) {
 bool isValidKeyword(const string& s) {
     if (s.empty() || s.length() > 60) return false;
     for (char c : s) {
-        if (c < 33 || c > 126 || c == '"') return false;
+        // ASCII characters except invisible characters (0-31, 127) and double quote (34)
+        if (c < 32 || c > 126 || c == '"') return false;
     }
     // Check for duplicate keywords
     vector<string> keywords = split(s, '|');
