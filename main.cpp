@@ -813,7 +813,14 @@ void cmdShowFinance(const vector<string>& params) {
                 return;
             }
         }
-        count = stoi(countStr);
+
+        // Use long long to avoid overflow
+        long long countLL = stoll(countStr);
+        if (countLL > 2147483647) {
+            cout << "Invalid\n";
+            return;
+        }
+        count = (int)countLL;
 
         if (count == 0) {
             cout << "\n";
