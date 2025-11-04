@@ -118,7 +118,8 @@ bool isValidISBN(const string& s) {
 bool isValidBookName(const string& s) {
     if (s.empty() || s.length() > 60) return false;
     for (char c : s) {
-        if (c < 33 || c > 126 || c == '"') return false;
+        // ASCII characters except invisible characters (0-31, 127) and double quote (34)
+        if (c < 32 || c > 126 || c == '"') return false;
     }
     return true;
 }
@@ -643,6 +644,12 @@ void cmdModify(const vector<string>& params) {
 
     set<string> usedParams;
     string newISBN = "";
+
+    // Debug output
+    // cerr << "Modify called with " << params.size() << " params" << endl;
+    // for (const auto& p : params) {
+    //     cerr << "  param: [" << p << "]" << endl;
+    // }
 
     for (const auto& param : params) {
         if (param.substr(0, 6) == "-ISBN=") {
